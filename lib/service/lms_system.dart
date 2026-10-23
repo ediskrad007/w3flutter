@@ -58,4 +58,18 @@ class LmsSystem {
     }
    courses.removeWhere((course) => course.id == courseId);
   }
+  void enrollStu({required String studentId , required String courseId}){
+    Student? students = _findStudentOrNull(studentId);
+    if(students==null){
+      throw Exception('not found');
+    }
+    Course? courses = _findCourseOrNull(courseId);
+    if(courses==null){
+      throw Exception('not found');
+    }
+    if(courses.studentIds.contains(studentId)){
+      throw Exception('eroll done');
+    }
+    courses.studentIds.add(studentId);
+  }
 }
