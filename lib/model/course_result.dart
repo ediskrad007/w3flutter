@@ -1,5 +1,6 @@
 class CourseResult {
-  final int id ;
+  final String studentId ;
+  final String coureId ;
   final int score ;
-  CourseResult({required this.id , required this.score});
+  CourseResult({required this.studentId , required this.coureId,required this.score});
 }

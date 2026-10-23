@@ -67,4 +67,64 @@ void main() {
     lms.enrollStu(courseId: 'c1' , studentId: 's1');
     expect(()=>lms.enrollStu(courseId: 'c1' , studentId: 's1'), throwsException);
   });
+  // mada 3 
+  test('remove existing enrollment', () {
+  final lms = LmsSystem();
+  lms.addStudent(studentId: 'S01', studentName: 'Ogero ronan');
+  lms.addCourse(courseId: 'C01', courseName: 'flutter');
+  lms.enrollStu(studentId: 'S01', courseId: 'C01');
+  lms.discardStudentFromCourse(
+    studentId: 'S01',
+    courseId: 'C01',
+  );
+  expect(lms.courses[0].studentIds, isEmpty);
+});
+test('reject removal of nonexistent enrollment', () {
+  final lms = LmsSystem();
+
+  lms.addStudent(studentId: 'S01', studentName: 'Dara');
+  lms.addCourse(courseId: 'C01', courseName: 'Dart');
+
+  expect(
+    () => lms.discardStudentFromCourse(
+      studentId: 'S01',
+      courseId: 'C01',
+    ),
+    throwsException,
+  );
+});
+test('student and course still exist after enrollment is removed', () {
+  final lms = LmsSystem();
+
+  lms.addStudent(studentId: 'S01', studentName: 'orger ronan');
+  lms.addCourse(courseId: 'C01', courseName: 'Dart');
+
+  lms.enrollStu(studentId: 'S01', courseId: 'C01');
+
+  lms.discardStudentFromCourse(
+    studentId: 'S01',
+    courseId: 'C01',
+  );
+
+  bool studentExists = false;
+  for (var student in lms.students) {
+    if (student.id == 'S01') {
+      studentExists = true;
+    }
+  }
+
+  bool courseExists = false;
+  for (var course in lms.courses) {
+    if (course.id == 'C01') {
+      courseExists = true;
+    }
+  }
+
+  expect(studentExists, true);
+  expect(courseExists, true);
+});
+
+
+
+
 }
